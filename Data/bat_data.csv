@@ -1,0 +1,126 @@
+"Species","common_name","age","sex","type","mass_g","tick_num","body_length_mm","tail_length_mm"
+"EPFU","big brown bat","adult","male","cave",16.3,5,101,50
+"EPFU","big brown bat","adult","female","cave",16.9,6,103,48
+"EPFU","big brown bat","subadult","female","cave",18.1,4,117,63
+"EPFU","big brown bat","subadult","male","cave",18.7,6,109,54
+"EPFU","big brown bat","adult","female","cave",18.9,4,101,42
+"EPFU","big brown bat","subadult","male","cave",18.9,7,123,67
+"EPFU","big brown bat","adult","male","cave",19.6,5,115,56
+"EPFU","big brown bat","subadult","male","cave",19.7,6,105,44
+"EPFU","big brown bat","adult","male","cave",20.1,8,118,55
+"EPFU","big brown bat","subadult","female","cave",20.5,4,120,58
+"EPFU","big brown bat","adult","female","cave",20.7,6,121,60
+"EPFU","big brown bat","subadult","male","cave",20.8,6,132,71
+"EPFU","big brown bat","adult","male","cave",20.8,7,110,45
+"EPFU","big brown bat","subadult","male","cave",20.9,4,119,53
+"EPFU","big brown bat","subadult","male","cave",20.9,6,147,83
+"EPFU","big brown bat","subadult","male","cave",21,7,132,67
+"EPFU","big brown bat","adult","female","cave",21.2,4,128,63
+"EPFU","big brown bat","adult","female","cave",21.7,5,120,53
+"EPFU","big brown bat","subadult","female","cave",21.7,2,123,56
+"EPFU","big brown bat","adult","female","cave",21.7,5,134,68
+"EPFU","big brown bat","subadult","female","cave",21.9,4,158,94
+"EPFU","big brown bat","subadult","female","cave",22,6,129,61
+"EPFU","big brown bat","adult","male","cave",22.6,8,147,79
+"EPFU","big brown bat","subadult","male","cave",22.8,6,127,55
+"EPFU","big brown bat","adult","male","cave",24.9,7,146,73
+"LACI","hoary bat","adult","female","tree",21.6,4,117,58
+"LACI","hoary bat","subadult","female","tree",24.4,4,119,53
+"LACI","hoary bat","subadult","female","tree",24.7,5,138,70
+"LACI","hoary bat","subadult","male","tree",25.2,6,139,69
+"LACI","hoary bat","subadult","male","tree",26.1,5,138,68
+"LACI","hoary bat","subadult","male","tree",26.6,7,140,72
+"LACI","hoary bat","subadult","female","tree",26.7,4,144,71
+"LACI","hoary bat","adult","male","tree",26.9,5,153,82
+"LACI","hoary bat","subadult","female","tree",27.4,3,125,50
+"LACI","hoary bat","subadult","male","tree",27.4,6,152,80
+"LACI","hoary bat","adult","male","tree",27.6,7,135,60
+"LACI","hoary bat","subadult","female","tree",27.8,4,138,62
+"LACI","hoary bat","subadult","male","tree",27.8,7,142,66
+"LACI","hoary bat","adult","male","tree",27.9,5,129,52
+"LACI","hoary bat","adult","male","tree",27.9,6,159,85
+"LACI","hoary bat","subadult","female","tree",28.1,4,152,77
+"LACI","hoary bat","adult","female","tree",28.2,4,143,67
+"LACI","hoary bat","subadult","female","tree",28.2,3,145,67
+"LACI","hoary bat","adult","male","tree",28.3,6,158,80
+"LACI","hoary bat","subadult","female","tree",28.6,5,176,99
+"LACI","hoary bat","adult","male","tree",28.6,5,175,97
+"LACI","hoary bat","adult","female","tree",28.9,4,150,69
+"LACI","hoary bat","subadult","female","tree",28.9,5,162,84
+"LACI","hoary bat","adult","female","tree",29.6,6,159,78
+"LACI","hoary bat","subadult","female","tree",30.6,5,163,81
+"LANO","silver-haired bat","subadult","male","tree",12.2,7,80,33
+"LANO","silver-haired bat","adult","female","tree",12.6,5,61,11
+"LANO","silver-haired bat","subadult","female","tree",12.9,4,96,48
+"LANO","silver-haired bat","subadult","male","tree",13,6,106,55
+"LANO","silver-haired bat","subadult","female","tree",13.5,5,101,47
+"LANO","silver-haired bat","adult","female","tree",13.6,4,104,51
+"LANO","silver-haired bat","subadult","male","tree",13.7,8,112,60
+"LANO","silver-haired bat","adult","male","tree",13.9,5,93,39
+"LANO","silver-haired bat","adult","female","tree",14,3,89,33
+"LANO","silver-haired bat","adult","male","tree",14,7,103,48
+"LANO","silver-haired bat","adult","male","tree",14.1,7,88,29
+"LANO","silver-haired bat","adult","male","tree",14.2,5,114,57
+"LANO","silver-haired bat","adult","female","tree",14.6,5,102,45
+"LANO","silver-haired bat","adult","female","tree",14.7,6,124,68
+"LANO","silver-haired bat","subadult","male","tree",14.8,5,109,52
+"LANO","silver-haired bat","adult","female","tree",14.9,4,109,49
+"LANO","silver-haired bat","subadult","male","tree",15.2,6,108,47
+"LANO","silver-haired bat","subadult","female","tree",15.3,5,121,63
+"LANO","silver-haired bat","adult","male","tree",15.5,5,116,58
+"LANO","silver-haired bat","adult","female","tree",15.6,6,123,64
+"LANO","silver-haired bat","subadult","female","tree",15.7,4,120,60
+"LANO","silver-haired bat","subadult","male","tree",15.7,7,111,49
+"LANO","silver-haired bat","adult","male","tree",15.7,6,101,38
+"LANO","silver-haired bat","subadult","female","tree",16.1,4,130,68
+"LANO","silver-haired bat","subadult","female","tree",16.2,4,146,87
+"MYLU","little brown bat","subadult","female","cave",9,5,63,30
+"MYLU","little brown bat","subadult","male","cave",9.2,5,86,49
+"MYLU","little brown bat","adult","female","cave",9.3,4,73,36
+"MYLU","little brown bat","adult","female","cave",9.4,3,73,33
+"MYLU","little brown bat","adult","female","cave",9.4,6,79,40
+"MYLU","little brown bat","adult","male","cave",9.4,8,80,39
+"MYLU","little brown bat","subadult","male","cave",9.5,8,77,35
+"MYLU","little brown bat","subadult","female","cave",9.8,3,96,55
+"MYLU","little brown bat","subadult","male","cave",9.8,6,94,51
+"MYLU","little brown bat","adult","male","cave",10,7,95,51
+"MYLU","little brown bat","adult","female","cave",10.3,6,102,55
+"MYLU","little brown bat","adult","female","cave",10.3,5,89,41
+"MYLU","little brown bat","subadult","female","cave",10.5,4,113,66
+"MYLU","little brown bat","subadult","male","cave",10.5,5,86,37
+"MYLU","little brown bat","adult","male","cave",10.5,8,102,54
+"MYLU","little brown bat","subadult","male","cave",10.6,7,98,49
+"MYLU","little brown bat","adult","male","cave",10.7,7,90,39
+"MYLU","little brown bat","adult","female","cave",10.9,5,99,49
+"MYLU","little brown bat","subadult","female","cave",10.9,4,114,67
+"MYLU","little brown bat","adult","male","cave",11,7,92,43
+"MYLU","little brown bat","subadult","female","cave",11.1,4,107,56
+"MYLU","little brown bat","adult","female","cave",11.4,5,101,48
+"MYLU","little brown bat","adult","male","cave",11.4,7,93,37
+"MYLU","little brown bat","adult","male","cave",12.5,7,111,56
+"MYLU","little brown bat","adult","female","cave",12.9,5,96,37
+"PESU","eastern pipistrelle","adult","female","cave",5.4,5,75,45
+"PESU","eastern pipistrelle","subadult","female","cave",5.9,4,61,25
+"PESU","eastern pipistrelle","subadult","male","cave",6.1,7,71,26
+"PESU","eastern pipistrelle","subadult","male","cave",6.6,7,68,24
+"PESU","eastern pipistrelle","adult","female","cave",6.7,3,64,20
+"PESU","eastern pipistrelle","adult","female","cave",6.8,5,74,32
+"PESU","eastern pipistrelle","subadult","female","cave",6.9,6,93,53
+"PESU","eastern pipistrelle","subadult","female","cave",7,4,83,38
+"PESU","eastern pipistrelle","adult","male","cave",7,4,82,36
+"PESU","eastern pipistrelle","adult","female","cave",7.1,5,75,29
+"PESU","eastern pipistrelle","adult","male","cave",7.2,6,97,50
+"PESU","eastern pipistrelle","adult","female","cave",7.5,5,72,21
+"PESU","eastern pipistrelle","adult","female","cave",7.5,3,88,39
+"PESU","eastern pipistrelle","subadult","female","cave",7.5,4,85,36
+"PESU","eastern pipistrelle","adult","male","cave",7.5,6,67,16
+"PESU","eastern pipistrelle","subadult","female","cave",7.6,5,95,47
+"PESU","eastern pipistrelle","adult","male","cave",7.6,6,72,20
+"PESU","eastern pipistrelle","subadult","male","cave",7.8,7,98,49
+"PESU","eastern pipistrelle","adult","male","cave",7.9,7,100,49
+"PESU","eastern pipistrelle","subadult","female","cave",8.2,4,91,40
+"PESU","eastern pipistrelle","subadult","female","cave",8.3,2,92,40
+"PESU","eastern pipistrelle","subadult","female","cave",8.5,4,95,43
+"PESU","eastern pipistrelle","adult","male","cave",8.6,6,103,49
+"PESU","eastern pipistrelle","subadult","female","cave",8.7,4,93,37
+"PESU","eastern pipistrelle","adult","female","cave",9.3,4,103,39
