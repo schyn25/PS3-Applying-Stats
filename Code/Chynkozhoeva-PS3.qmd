@@ -1,0 +1,488 @@
+---
+title: "Chynkozhoeva_PS3"
+format: html
+editor: visual
+---
+
+## Overview
+
+This problem set focuses on the analysis of data collected during a summer research study conducted by Aria, our friend and a Biology major at SLU. The study aimed to examine the rate of tick parasitism in five species of bats native to northeastern North America.
+
+To help Aria we need to answer following questions:
+
+1.  Does body mass differ between these five species of bats and, if so, how does body mass differ between the species?
+2.  Does body length differ between these five species of bats and, if so, how does body length differ between the species?
+3.  Is the number of ticks found on the bats associated with their sex or age?
+4.  Disregarding species, is there a relationship in bats between tail length and body length?
+
+As a main procedure, I decided to apply the following model presented in our class book:
+
+Plot your data (and guess the results) → Build the statistical model → Check the model assumptions → Interpret the model → Make a final plot.
+
+To strat, we need to set things up:
+
+```{r}
+rm(list = ls()) #clears R's environment
+
+library(ggfortify) #evaluates model assumptions
+library(tidyverse) #contains multiple handy packages, like 'ggplot2', which is useful for data visualization
+library(here)
+```
+
+Import data into R's environment:
+
+```{r}
+bats <- read.csv(here("Data","bat_data.csv")) 
+```
+
+## Data Preparation
+
+Before plotting any graphs, we need to make sure that our data entries are consistent across different variables, and if there are any errors or outliers we need to tackle those issues first.
+
+For this reason, we will look at our data frame in two ways.
+
+1.  Use str():
+
+```{r}
+str(bats) #provides a structural overview of the dataset
+```
+
+Structure function tells us some basic information about our data frame. It shows us the type of data as well as levels or categories of all variables. For instance, both 'Species' and 'common_name' variables have 5 levels each.
+
+2.  Use glimpse():
+
+```{r}
+glimpse(bats) #provides an overview of variables and their types; displays first few rows of data
+```
+
+Glimpse function contains same information but in a more easily readable display. Here, we see that 'bats' data frame consists of 125 rows and 9 columns.
+
+-   Categorical variables such as 'Species', 'common_name', 'age', 'sex', and 'type' are in <chr> form. For future analysis, it's important to convert them into factors. Therefore, below we will use as.factor()
+
+```{r}
+bats$Species <- as.factor(bats$Species)
+bats$common_name <- as.factor(bats$common_name)
+bats$age <- as.factor(bats$age)
+bats$sex <- as.factor(bats$sex)
+bats$type <- as.factor(bats$type)
+
+#dollar sign refers to the specific variable we are looking at, and 'as.factor()' converts our variables into factors
+```
+
+Now, to check that all of our categorical variables were converted into factors, we can either look at our data frame in the R's 'Environment' or use glimpse() for an overview.
+
+```{r}
+glimpse(bats)
+```
+
+We should check our factor variables for inconsistencies by using levels().
+
+```{r}
+levels(bats$Species)
+levels(bats$common_name)
+levels(bats$age)
+levels(bats$sex)
+levels(bats$type)
+
+#levels() is used to view categories/levels of the factors. 
+```
+
+We can see that there are no inconsistent entries or typos. Therefore, there is no need to fix anything. Each variable has unique levels. For instance, there are only two types of bats: cave bats and tree bats.
+
+Now we can plot data to look for any possible numerical outliers. For single variables, we could start with histograms to spot any significant outliers and see general trend.
+
+For all the histograms generated below, I will use almost the same code, which includes following function:ggplot(), geom_histogram(), facet_wrap() and theme_bw().
+
+I will explain the functions in the code chunk for the first group of histograms. See 'histogram of mass_g' for a reference.
+
+```{r}
+#histogram of 'mass_g'
+
+ggplot(bats, aes(mass_g)) +
+  geom_histogram(bins = 10) +
+  facet_wrap(~common_name) +
+  theme_bw()
+  
+#ggplot() dictates a visual characteristics of a plot
+#geom_histogram() generates a histogram
+#in facet_wrap(~) divides the data by the selected treatment into several histiograms 
+#theme_bw - changes the grey background to white
+```
+
+It seems like there are no outliers, the histograms look fine.
+
+```{r}
+#histogram of 'tick_num'
+
+ggplot(bats, aes(tick_num)) +
+  geom_histogram(bins = 5) +
+  facet_wrap(~common_name) +
+  xlab("Number of ticks") +
+  theme_bw()
+  
+```
+
+The histograms for number of ticks are also following general trends. There might be some outliers, but I don't think they will significantly affect our analysis.
+
+```{r}
+#histogram of body_length_mm
+
+ggplot(bats, aes(body_length_mm)) +
+  geom_histogram(binwidth = 10) +
+  facet_wrap(~common_name) +
+  xlab("Body length (mm)") +
+  theme_bw()
+  
+```
+
+Similarly to the histograms plotted earlier, histograms for body length might have a few outliers, but as a whole, they do not raise any major concern.
+
+```{r}
+#histogram of 'tail_length_mm'
+
+ggplot(bats, aes(tail_length_mm)) +
+  geom_histogram(bins = 10) +
+  facet_wrap(~common_name) +
+  xlab("Tain length (mm)") +
+  theme_bw()
+  
+```
+
+Based on the histograms observed above, I don't think there are any extreme outliers.
+
+After checking our factor variables for inconsistencies and our numerical data for significant outliers, we can proceed by plotting and making guesses or estimating the results.
+
+------------------------------------------------------------------------
+
+## Question 1
+
+The question is: "Does body mass differ between these five species of bats and, if so, how does body mass differ between the species?"
+
+To check whether there is a significant difference in body mass between five species of bats we could use a one-way Analysis of Variance (ANOVA).
+
+### Plot the data
+
+Our variables are: Predictor variable (x-axis) = species. Response variable (y-axis) = body mass in grams.
+
+Check for outliers:
+
+```{r}
+ggplot(bats, aes(mass_g))+
+  geom_histogram(bins = 30)+
+  facet_wrap(~Species) +
+  xlab("Body mass (g)") +
+  theme_bw()
+
+#xlab("...") - renames x-axis
+```
+
+Plot the boxplot by using geom_boxplot():
+
+```{r}
+ggplot(bats, aes(x =Species, y = mass_g)) +
+  geom_boxplot() 
+```
+
+### Estimate the results
+
+By looking at our models I would assume that there is a significant difference in body mass between these 5 species of bats.
+
+It looks like there are two major outliers (apporx. 17 grams and 25 grams) in 'EPFU' and one (approx. 22 grams) in 'LACI'. The species body mass goes in the following increasing order: PESU \< MYLU \< LANO \< EPFU \< LACI.
+
+### Build the model
+
+```{r}
+species_mass <- lm(mass_g ~ Species, data = bats)
+
+#lm() function creates a linear model necessary to run the ANOVA test and analyze the relationship between body mass in grams and species of bats. Here by 'data' we are referring to our data frame, which is 'bats'.
+```
+
+### Check model assumptions
+
+To check model assumptions, we use autoplot():
+
+```{r}
+autoplot(species_mass, smooth.colour = NA)
+
+#automatically plots four diagnostic graphs; smooth.coulour = NA removes the colorful trend line 
+```
+
+The upper-right model shows us that our data follows normal distribution, and the upper-left graph shows us 5 'pillars' (categories), the points are closely clustered, which is good, and there are no points that create a weird shape, so there are no issues with the data.
+
+### Interpret the model
+
+anova() does not perform an ANOVA. Instead, it is used to produce a classic table in statistic, including overall F-value for the model, ratio of variance, and p-value.
+
+```{r}
+anova(species_mass) 
+```
+
+According to the results indicated a significant difference in the mass of bats between species (df(4,120), F-value: 729.9, p-value: \<2.2e-16). It supports the assumption we made earlier when we plotted our data.
+
+```{r}
+summary(species_mass) #displays a comprehensive report of the 'species_mass' model; produces a table of the estimates of the coefficients of the line that is the 
+```
+
+- The model produced highly significant results for all species comparisons, with p-values less than 2e-16 for each species, indicating that the species have a statistically significant impact on mass. The Adjusted R-squared of 0.9623 supports the idea of strong positive correlation between the predictor and response variables.
+
+-   The big brown bat served as the reference species or the intercept. The hoary bat's (LACI) mass was 6.828 grams higher than the big brown bat. Other three species were lower in mass than the big brown bat. This finding supports our initial estimation of the order pf increasing mass in bat species. 
+
+```{r}
+library(emmeans)
+species_mean <- emmeans(species_mass, specs = "Species")
+summary(species_mean)
+```
+
+For "post hoc" tests of difference in means we need to enable the 'multcomp' package.
+
+```{r}
+library(multcomp) #'multcomp' package helps perform post-hoc multiple comparisons
+```
+
+Conduct a Tukey's HSD (honestly significant differences) test:
+
+```{r}
+tukey1 <- glht(species_mass, linfct = mcp(Species = "Tukey")) 
+  summary(tukey1)
+
+#glht() is used to perform generalized linear hypothesis test
+  #mcp(Species = "Tukey") specifies that Tukey's method should be applied to compare all pairs of Species variable. 
+```
+Based on the Tukey test results, we confirm some of the findings from the ANOVA test we conducted earlier but also notice the following:
+
+- All comparisons listed above show significant differences, with p-values less than 1e-09 for each comparison, indicating that species differences in mass are statistically significant across all pairwise comparisons.
+
+- Some examples include: The eastern pipistrelle (PESU) is significantly 19.952 units lighter than the hoary bat.The little brown bat is 4.056 units lighter than the silver-haired bat.
+
+
+```{r}
+cld(tukey1) #cld stands for "Compact Letter Display" 
+```
+
+This compact letter display shows different letters, meaning that all bat species have significantly different body masses from one another.
+
+### Make a final plot
+
+```{r}
+ggplot(bats, aes(x =Species, y = mass_g)) +
+  geom_boxplot() +
+  xlab("Species") +
+  ylab("Body Mass (g)") +
+  coord_flip() +
+  theme_bw()
+```
+
+To remind our main findings: There is a significant difference found in the mass of bats between species 
+(df(4,120), F-value: 729.9, p-value: \<2.2e-16). 
+
+
+-------------------------------------------------------------------
+
+## Question 2
+
+Question 2 states: "Does body length differ between these five species of bats and, if so, how does body length differ between the species?"
+
+This question is very similar to Question 1. To check whether there is a significant difference in body length between five species of bats we could use a one-way Analysis of Variance (ANOVA).
+
+### Plot the data
+
+Our variables are: Predictor variable (x-axis) = species. Response variable (y-axis) = body length in mm.
+
+Check for outliers:
+
+```{r}
+ggplot(bats, aes(body_length_mm))+
+  geom_histogram(bins = 10)+
+  facet_wrap(~Species) 
+```
+The histograms do not exhibit extreme outliers. 
+
+Now plot the boxplot by using geom_boxplot():
+
+```{r}
+ggplot(bats, aes(x =Species, y = body_length_mm)) +
+  geom_boxplot() 
+```
+
+### Estimate the results
+
+By looking at our models I would assume that there is a significant difference in body length between these 5 species of bats.
+
+It looks like there a few outliers (apporx. 61 mm and 148 mm) in 'LANO', one (approx. 62 mm) in 'MYLU', and one (approx. 160 mm) in 'EPFU'. The species body length goes in the following increasing order: PESU \< MYLU \< LANO \< EPFU \< LACI.
+
+### Build the model
+
+```{r}
+species_length <- lm(body_length_mm ~ Species, data = bats)
+
+#lm() function creates a linear model necessary to run the ANOVA test and analyze the relationship between body length in mm and species of bats. Here by 'data' we are referring to our data frame, which is 'bats'.
+
+```
+
+### Check model assumptions
+
+To check model assumptions, we use autoplot():
+
+```{r}
+autoplot(species_length, smooth.colour = NA)
+
+#automatically plots four diagnostic graphs; smooth.coulour = NA removes the colorful trend line 
+```
+Looking at the four graphic models, it seems like there is nothing to be worried about in terms of our data. 
+
+### Interpret the model
+
+anova() does not perform an ANOVA. Instead, it is used to produce a classic table in statistic, including overall F-value for the model, ratio of variance, and p-value.
+
+```{r}
+anova(species_length)
+```
+There is a significant difference in body length between the species, as indicated by the very small p-value (< 2.2e-16). The large F-value (70.498) suggests that species differences in body length are much greater than random variation within species. However, Tukey's test would be needed to identify which specific species differ from each other.
+
+```{r}
+summary(species_length)
+```
+The results suggest significant differences in body length among the five species of bats. Specifically, the hoary bat (LACI), silver-haired bat (LANO), little brown bat (MYLU), and eastern pipistelle (PESU) have significantly different body lengths compared to the big brown bat (EFPU).
+
+```{r}
+library(emmeans)
+library(multcomp)
+```
+
+Conduct a Tukey's HSD (honestly significant differences) test:
+
+```{r}
+tukey2 <- glht(species_length, linfct = mcp(Species = "Tukey"))
+
+```
+
+```{r}
+cld(tukey2) #Compact Letter Display
+```
+
+- If there is no significant difference observed between body length among different species, the latters displayed would be the same. Here we can see that the body length in mm between MYLU (little brown bat) and PESU (eastern pipistrelle) are not significant. 
+- However, the body length of other bat species is significantly different from one another. 
+
+### Make a final plot
+
+```{r}
+ggplot(bats, aes(x =Species, y = body_length_mm)) +
+  geom_boxplot() +
+  xlab("Species") +
+  ylab("Body Length (mm)") +
+  coord_flip() +
+  theme_bw()
+
+#coord_flip() flips x- and -y-coordinates for better view 
+#x- and ylabs() rename the x- and y-axis 
+```
+According to the results indicated a significant difference in the body length of bats between species (df(4,120), F-value: 70.49, p-value: \<2.2e-16). It supports the assumption we made earlier when we plotted our data. 
+
+
+------------------------------------------------------------------------
+
+## Question 3
+
+Question 3 asks: "Is the number of ticks found on the bats associated with their sex or age?"
+
+We will look at this problem, firstly by looking at the relationship between the number of ticks found and sex (part A) and then, at the relationship between the number of ticks found and age of the bats (part B). Since the questions asks about association between categorical predictor and response variables, our answer could found by conducting Chi-squared test.
+
+### Part A: Species vs sex
+
+```{r}
+tick_num <- bats |> group_by(Species, sex) |>
+  summarise(total_ticks = sum(tick_num))
+```
+
+```{r}
+ggplot(tick_num, aes(x = Species, y = total_ticks, fill = sex)) +
+  geom_bar(stat = 'identity', position = 'dodge') +
+  scale_fill_manual(values = c(female = "pink", male = "lightblue")) +
+  theme_bw()
+```
+
+```{r}
+sex_mat <- xtabs(total_ticks ~ Species + sex,
+                  data = tick_num)
+```
+
+```{r}
+chisq.test(sex_mat)
+```
+
+evidence of an association between total number of ticks and the number of ticks found on the bats is associated with their sex based on the small p-value () that we found (X-squared = 9.7767, df = 4, p-value = 0.04436)
+
+### Part B: Specis vs age
+
+```{r}
+tick_num2 <- bats |> group_by(Species, age) |>
+  summarise(total_ticks = sum(tick_num))
+```
+
+```{r}
+ggplot(tick_num2, aes(x = Species, y = total_ticks, fill = age)) +
+  geom_bar(stat = 'identity', position = 'dodge') +
+  theme_bw()
+  
+```
+
+```{r}
+age_mat <- xtabs(total_ticks ~ Species + age,
+                 data = tick_num2)
+```
+
+```{r}
+chisq.test(age_mat)
+```
+
+## Question 4
+
+Question 4: "Disregarding species, is there a relationship in bats between tail length and body length?"
+
+To answer this question, I will use simple linear regression since both of the variables are continuous. 
+
+## Plot the graph
+
+```{r}
+ggplot(bats, 
+       aes(x = body_length_mm, y = tail_length_mm)) +
+  geom_point()
+```
+## Estimate the results
+
+Based on this scatterplot, I assume that the two contiuous variables are strongly positively correlated.
+
+## Build the model
+
+```{r}
+mod_body_tail <- lm(body_length_mm ~ tail_length_mm,
+                    data = bats)
+#this code creates a linear model to explore the relationship between body length and tail length in bats. 
+```
+
+## Check model assumptions
+
+```{r}
+autoplot(mod_body_tail, smooth.colour = NA)
+```
+
+Overall, the four diagnostic graphs tell us that there is no problem with the data and we may proceed by interpreting the model. 
+## Interpret the model
+
+```{r}
+summary(mod_body_tail)
+```
+
+The linear model reveals a strong, statistically significant relationship between tail length and body length in bats (p < 2e-16). The positive coefficient for tail length (1.455) indicates that for every 1 mm increase in tail length, body length increases by approximately 1.455 mm. The adjusted R-squared of 0.89 supports our initial prediction that there is a strong correlatipn between the two variables. 
+
+## Make a final plot
+
+```{r}
+ggplot(bats, 
+       aes(x = body_length_mm, y = tail_length_mm)) +
+  geom_point() +
+  xlab("Body Length (mm)") +
+  ylab("Tail Length (mm)") +
+  theme_bw()
+```
+I hope that these codes and explanations will help Ari with her research. 
