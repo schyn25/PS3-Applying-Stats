@@ -342,7 +342,7 @@ There is a significant difference in body length between the species, as indicat
 ```{r}
 summary(species_length)
 ```
-The results suggest significant differences in body length among the five species of bats. Specifically, the hoary bat (LACI), silver-haired bat (LANO), little brown bat (MYLU), and eastern pipistelle (PESU) have significantly different body lengths compared to the big brown bat (EFPU).
+The results suggest significant differences in body length among the five species of bats. Specifically, the hoary bat (LACI), silver-haired bat (LANO), little brown bat (MYLU), and eastern pipistrelle (PESU) have significantly different body lengths compared to the big brown bat (EFPU).
 
 ```{r}
 library(emmeans)
@@ -385,55 +385,61 @@ According to the results indicated a significant difference in the body length o
 
 Question 3 asks: "Is the number of ticks found on the bats associated with their sex or age?"
 
-We will look at this problem, firstly by looking at the relationship between the number of ticks found and sex (part A) and then, at the relationship between the number of ticks found and age of the bats (part B). Since the questions asks about association between categorical predictor and response variables, our answer could found by conducting Chi-squared test.
+Since the questions asks about association between categorical predictor and response variables, our answer could found by conducting Chi-squared test.
 
-### Part A: Species vs sex
+Firstly, calculate the total number of ticks per group:
 
 ```{r}
-tick_num <- bats |> group_by(Species, sex) |>
+tick_sex_age <- bats |> 
+  group_by(age, sex) |>
   summarise(total_ticks = sum(tick_num))
+
+#this dataset will be divided into subsets based on two variables: sex and age.
+#sum(tick_num) calculates the sum of tick numbers for each group
 ```
 
+Then, plot the data to guess the relationship:
+
 ```{r}
-ggplot(tick_num, aes(x = Species, y = total_ticks, fill = sex)) +
+ggplot(tick_sex_age, aes(x = age, y = total_ticks, fill = sex)) +
+  geom_bar(stat = 'identity', position = 'dodge') 
+```
+By looking at this barchart, we can assume that there are more ticks on male bat representatives than females for both adult and subadult groups. However, just based on the bar chart it is hard to say that there is a significant difference.
+
+
+Next step is to transform data frame into a matrix needed for the chi-squared test:
+
+```{r}
+sex_age_mat <- xtabs(total_ticks ~ age + sex,
+                  data = tick_sex_age)
+#'xtabs() creates a contingency table, which summarizes the relationship between age and sex in terms of the total number of ticks present on the bats
+
+sex_age_mat #shows the matrix/table with values below
+```
+The table shows that there were 150 ticks found on female adult bats, 195 on male adults, 145 on female subadults, and 170 on male subadults.
+
+Now do the chi-squared test:
+
+```{r}
+chisq.test(sex_age_mat)
+```
+Based on the results of the test, due to our p-value of 0.5615 being greater than the standard p-value = 0.05, we can say that there is no significant association between age and sex in terms of the number of ticks found on those bats (X² = 0.33718, df = 1, p = 0.5615). 
+
+Make a final plot:
+
+```{r}
+ggplot(tick_sex_age, aes(x = age, y = total_ticks, fill = sex)) +
   geom_bar(stat = 'identity', position = 'dodge') +
   scale_fill_manual(values = c(female = "pink", male = "lightblue")) +
+  xlab("Age Group") +
+  ylab("Total Ticks") +
   theme_bw()
+
+#stat = 'identity' means that the bar's height reflects the actual value in the dataset
+#position = 'dodge' is used to position the bars side by side for each group
+#scale_fill_manual() is used to customize the colors of the bars based on sex and the colors I provided
 ```
 
-```{r}
-sex_mat <- xtabs(total_ticks ~ Species + sex,
-                  data = tick_num)
-```
-
-```{r}
-chisq.test(sex_mat)
-```
-
-evidence of an association between total number of ticks and the number of ticks found on the bats is associated with their sex based on the small p-value () that we found (X-squared = 9.7767, df = 4, p-value = 0.04436)
-
-### Part B: Specis vs age
-
-```{r}
-tick_num2 <- bats |> group_by(Species, age) |>
-  summarise(total_ticks = sum(tick_num))
-```
-
-```{r}
-ggplot(tick_num2, aes(x = Species, y = total_ticks, fill = age)) +
-  geom_bar(stat = 'identity', position = 'dodge') +
-  theme_bw()
-  
-```
-
-```{r}
-age_mat <- xtabs(total_ticks ~ Species + age,
-                 data = tick_num2)
-```
-
-```{r}
-chisq.test(age_mat)
-```
 
 ## Question 4
 
