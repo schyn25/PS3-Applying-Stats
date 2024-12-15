@@ -223,9 +223,9 @@ According to the results indicated a significant difference in the mass of bats 
 summary(species_mass) #displays a comprehensive report of the 'species_mass' model; produces a table of the estimates of the coefficients of the line that is the 
 ```
 
-- The model produced highly significant results for all species comparisons, with p-values less than 2e-16 for each species, indicating that the species have a statistically significant impact on mass. The Adjusted R-squared of 0.9623 supports the idea of strong positive correlation between the predictor and response variables.
+-   The model produced highly significant results for all species comparisons, with p-values less than 2e-16 for each species, indicating that the species have a statistically significant impact on mass. The Adjusted R-squared of 0.9623 supports the idea of strong positive correlation between the predictor and response variables.
 
--   The big brown bat served as the reference species or the intercept. The hoary bat's (LACI) mass was 6.828 grams higher than the big brown bat. Other three species were lower in mass than the big brown bat. This finding supports our initial estimation of the order pf increasing mass in bat species. 
+-   The big brown bat served as the reference species or the intercept. The hoary bat's (LACI) mass was 6.828 grams higher than the big brown bat. Other three species were lower in mass than the big brown bat. This finding supports our initial estimation of the order pf increasing mass in bat species.
 
 ```{r}
 library(emmeans)
@@ -248,12 +248,12 @@ tukey1 <- glht(species_mass, linfct = mcp(Species = "Tukey"))
 #glht() is used to perform generalized linear hypothesis test
   #mcp(Species = "Tukey") specifies that Tukey's method should be applied to compare all pairs of Species variable. 
 ```
+
 Based on the Tukey test results, we confirm some of the findings from the ANOVA test we conducted earlier but also notice the following:
 
-- All comparisons listed above show significant differences, with p-values less than 1e-09 for each comparison, indicating that species differences in mass are statistically significant across all pairwise comparisons.
+-   All comparisons listed above show significant differences, with p-values less than 1e-09 for each comparison, indicating that species differences in mass are statistically significant across all pairwise comparisons.
 
-- Some examples include: The eastern pipistrelle (PESU) is significantly 19.952 units lighter than the hoary bat.The little brown bat is 4.056 units lighter than the silver-haired bat.
-
+-   Some examples include: The eastern pipistrelle (PESU) is significantly 19.952 units lighter than the hoary bat.The little brown bat is 4.056 units lighter than the silver-haired bat.
 
 ```{r}
 cld(tukey1) #cld stands for "Compact Letter Display" 
@@ -272,11 +272,9 @@ ggplot(bats, aes(x =Species, y = mass_g)) +
   theme_bw()
 ```
 
-To remind our main findings: There is a significant difference found in the mass of bats between species 
-(df(4,120), F-value: 729.9, p-value: \<2.2e-16). 
+To remind our main findings: There is a significant difference found in the mass of bats between species (df(4,120), F-value: 729.9, p-value: \<2.2e-16).
 
-
--------------------------------------------------------------------
+------------------------------------------------------------------------
 
 ## Question 2
 
@@ -295,7 +293,8 @@ ggplot(bats, aes(body_length_mm))+
   geom_histogram(bins = 10)+
   facet_wrap(~Species) 
 ```
-The histograms do not exhibit extreme outliers. 
+
+The histograms do not exhibit extreme outliers.
 
 Now plot the boxplot by using geom_boxplot():
 
@@ -328,7 +327,8 @@ autoplot(species_length, smooth.colour = NA)
 
 #automatically plots four diagnostic graphs; smooth.coulour = NA removes the colorful trend line 
 ```
-Looking at the four graphic models, it seems like there is nothing to be worried about in terms of our data. 
+
+Looking at the four graphic models, it seems like there is nothing to be worried about in terms of our data.
 
 ### Interpret the model
 
@@ -337,11 +337,13 @@ anova() does not perform an ANOVA. Instead, it is used to produce a classic tabl
 ```{r}
 anova(species_length)
 ```
-There is a significant difference in body length between the species, as indicated by the very small p-value (< 2.2e-16). The large F-value (70.498) suggests that species differences in body length are much greater than random variation within species. However, Tukey's test would be needed to identify which specific species differ from each other.
+
+There is a significant difference in body length between the species, as indicated by the very small p-value (\< 2.2e-16). The large F-value (70.498) suggests that species differences in body length are much greater than random variation within species. However, Tukey's test would be needed to identify which specific species differ from each other.
 
 ```{r}
 summary(species_length)
 ```
+
 The results suggest significant differences in body length among the five species of bats. Specifically, the hoary bat (LACI), silver-haired bat (LANO), little brown bat (MYLU), and eastern pipistrelle (PESU) have significantly different body lengths compared to the big brown bat (EFPU).
 
 ```{r}
@@ -360,8 +362,8 @@ tukey2 <- glht(species_length, linfct = mcp(Species = "Tukey"))
 cld(tukey2) #Compact Letter Display
 ```
 
-- If there is no significant difference observed between body length among different species, the latters displayed would be the same. Here we can see that the body length in mm between MYLU (little brown bat) and PESU (eastern pipistrelle) are not significant. 
-- However, the body length of other bat species is significantly different from one another. 
+-   If there is no significant difference observed between body length among different species, the latters displayed would be the same. Here we can see that the body length in mm between MYLU (little brown bat) and PESU (eastern pipistrelle) are not significant.
+-   However, the body length of other bat species is significantly different from one another.
 
 ### Make a final plot
 
@@ -376,8 +378,8 @@ ggplot(bats, aes(x =Species, y = body_length_mm)) +
 #coord_flip() flips x- and -y-coordinates for better view 
 #x- and ylabs() rename the x- and y-axis 
 ```
-According to the results indicated a significant difference in the body length of bats between species (df(4,120), F-value: 70.49, p-value: \<2.2e-16). It supports the assumption we made earlier when we plotted our data. 
 
+According to the results indicated a significant difference in the body length of bats between species (df(4,120), F-value: 70.49, p-value: \<2.2e-16). It supports the assumption we made earlier when we plotted our data.
 
 ------------------------------------------------------------------------
 
@@ -404,8 +406,8 @@ Then, plot the data to guess the relationship:
 ggplot(tick_sex_age, aes(x = age, y = total_ticks, fill = sex)) +
   geom_bar(stat = 'identity', position = 'dodge') 
 ```
-By looking at this barchart, we can assume that there are more ticks on male bat representatives than females for both adult and subadult groups. However, just based on the bar chart it is hard to say that there is a significant difference.
 
+By looking at this barchart, we can assume that there are more ticks on male bat representatives than females for both adult and subadult groups. However, just based on the bar chart it is hard to say that there is a significant difference.
 
 Next step is to transform data frame into a matrix needed for the chi-squared test:
 
@@ -416,6 +418,7 @@ sex_age_mat <- xtabs(total_ticks ~ age + sex,
 
 sex_age_mat #shows the matrix/table with values below
 ```
+
 The table shows that there were 150 ticks found on female adult bats, 195 on male adults, 145 on female subadults, and 170 on male subadults.
 
 Now do the chi-squared test:
@@ -423,7 +426,8 @@ Now do the chi-squared test:
 ```{r}
 chisq.test(sex_age_mat)
 ```
-Based on the results of the test, due to our p-value of 0.5615 being greater than the standard p-value = 0.05, we can say that there is no significant association between age and sex in terms of the number of ticks found on those bats (X² = 0.33718, df = 1, p = 0.5615). 
+
+Based on the results of the test, due to our p-value of 0.5615 being greater than the standard p-value = 0.05, we can say that there is no significant association between age and sex in terms of the number of ticks found on those bats (X² = 0.33718, df = 1, p = 0.5615).
 
 Make a final plot:
 
@@ -440,12 +444,11 @@ ggplot(tick_sex_age, aes(x = age, y = total_ticks, fill = sex)) +
 #scale_fill_manual() is used to customize the colors of the bars based on sex and the colors I provided
 ```
 
-
 ## Question 4
 
 Question 4: "Disregarding species, is there a relationship in bats between tail length and body length?"
 
-To answer this question, I will use simple linear regression since both of the variables are continuous. 
+To answer this question, I will use simple linear regression since both of the variables are continuous.
 
 ## Plot the graph
 
@@ -454,6 +457,7 @@ ggplot(bats,
        aes(x = body_length_mm, y = tail_length_mm)) +
   geom_point()
 ```
+
 ## Estimate the results
 
 Based on this scatterplot, I assume that the two contiuous variables are strongly positively correlated.
@@ -472,14 +476,13 @@ mod_body_tail <- lm(body_length_mm ~ tail_length_mm,
 autoplot(mod_body_tail, smooth.colour = NA)
 ```
 
-Overall, the four diagnostic graphs tell us that there is no problem with the data and we may proceed by interpreting the model. 
-## Interpret the model
+Overall, the four diagnostic graphs tell us that there is no problem with the data and we may proceed by interpreting the model. \## Interpret the model
 
 ```{r}
 summary(mod_body_tail)
 ```
 
-The linear model reveals a strong, statistically significant relationship between tail length and body length in bats (p < 2e-16). The positive coefficient for tail length (1.455) indicates that for every 1 mm increase in tail length, body length increases by approximately 1.455 mm. The adjusted R-squared of 0.89 supports our initial prediction that there is a strong correlatipn between the two variables. 
+The linear model reveals a strong, statistically significant relationship between tail length and body length in bats (p \< 2e-16). The positive coefficient for tail length (1.455) indicates that for every 1 mm increase in tail length, body length increases by approximately 1.455 mm. The adjusted R-squared of 0.89 supports our initial prediction that there is a strong correlatipn between the two variables.
 
 ## Make a final plot
 
@@ -491,4 +494,5 @@ ggplot(bats,
   ylab("Tail Length (mm)") +
   theme_bw()
 ```
-I hope that these codes and explanations will help Ari with her research. 
+
+I hope that these codes and explanations will help Ari with her research.
